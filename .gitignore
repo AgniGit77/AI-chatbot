@@ -1,0 +1,77 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# Environment Variables
+.env
+.env.local
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# User uploads and generated files
+uploads/
+static/uploads/
+user_data/
+avatars/
+temp/
+
+# Model files (too large for git)
+models/*.pkl
+models/*.h5
+models/*.pth
+*.pth
+*.h5
+
+# Node modules (if using frontend)
+node_modules/
+package-lock.json
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build files
+*.pyc
