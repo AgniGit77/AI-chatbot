@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Fashion Chatbot - Virtual try-on and styling assistant">
+    <title>AI Fashion Chatbot - Virtual Try-On & Styling Assistant</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header" role="banner">
+            <div class="header-content">
+                <h1 class="logo">
+                    <i class="fas fa-tshirt" aria-hidden="true"></i>
+                    AI Fashion Assistant
+                </h1>
+                <nav class="header-nav" role="navigation" aria-label="Main navigation">
+                    <button id="settingsBtn" class="icon-btn" aria-label="Settings">
+                        <i class="fas fa-cog" aria-hidden="true"></i>
+                    </button>
+                    <button id="privacyBtn" class="icon-btn" aria-label="Privacy settings">
+                        <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                    </button>
+                    <button id="accessibilityBtn" class="icon-btn" aria-label="Accessibility options">
+                        <i class="fas fa-universal-access" aria-hidden="true"></i>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main id="main-content" class="main-content" role="main">
+            <!-- Chat Interface -->
+            <div class="chat-container">
+                <div id="chatMessages" class="chat-messages" role="log" aria-live="polite" aria-label="Chat messages">
+                    <!-- Welcome message -->
+                    <div class="message bot-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>Welcome to your AI Fashion Assistant! 👗✨</p>
+                            <p>I can help you with:</p>
+                            <ul>
+                                <li>Virtual try-ons - See how clothes look on you</li>
+                                <li>Size recommendations - Get the perfect fit</li>
+                                <li>Styling advice - Complete outfit suggestions</li>
+                                <li>Product search - Find similar items</li>
+                            </ul>
+                            <p>What would you like to explore today?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions" role="group" aria-label="Quick actions">
+                    <button class="quick-action-btn" data-action="tryon">
+                        <i class="fas fa-camera" aria-hidden="true"></i>
+                        <span>Try On</span>
+                    </button>
+                    <button class="quick-action-btn" data-action="size">
+                        <i class="fas fa-ruler" aria-hidden="true"></i>
+                        <span>Size Guide</span>
+                    </button>
+                    <button class="quick-action-btn" data-action="style">
+                        <i class="fas fa-palette" aria-hidden="true"></i>
+                        <span>Style Advice</span>
+                    </button>
+                    <button class="quick-action-btn" data-action="search">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <span>Find Items</span>
+                    </button>
+                </div>
+
+                <!-- Input Area -->
+                <div class="chat-input-container">
+                    <form id="chatForm" class="chat-form">
+                        <button type="button" id="uploadImageBtn" class="icon-btn" aria-label="Upload image">
+                            <i class="fas fa-image" aria-hidden="true"></i>
+                        </button>
+                        <input type="file" id="imageUpload" accept="image/*" hidden aria-label="Image file upload">
+                        
+                        <label for="messageInput" class="sr-only">Type your message</label>
+                        <input 
+                            type="text" 
+                            id="messageInput" 
+                            class="chat-input" 
+                            placeholder="Ask me anything about fashion..."
+                            autocomplete="off"
+                            aria-label="Chat message input"
+                        >
+                        
+                        <button type="submit" class="send-btn" aria-label="Send message">
+                            <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Virtual Try-On Panel -->
+            <div id="tryonPanel" class="tryon-panel" hidden>
+                <div class="panel-header">
+                    <h2>Virtual Try-On</h2>
+                    <button class="close-btn" aria-label="Close panel">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="panel-content">
+                    <div id="tryonPreview" class="tryon-preview">
+                        <p>Upload your photo or paste a product URL to start</p>
+                    </div>
+                    <div class="tryon-controls">
+                        <button id="uploadPhotoBtn" class="btn btn-primary">
+                            <i class="fas fa-upload"></i> Upload Photo
+                        </button>
+                        <input type="url" id="productUrlInput" placeholder="Paste product URL..." class="url-input">
+                        <button id="processTryonBtn" class="btn btn-secondary">Try It On</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Settings Modal -->
+        <div id="settingsModal" class="modal" hidden role="dialog" aria-labelledby="settingsModalTitle" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="settingsModalTitle">Settings</h2>
+                    <button class="close-btn" aria-label="Close settings">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <section>
+                        <h3>Measurements</h3>
+                        <form id="measurementsForm">
+                            <div class="form-group">
+                                <label for="heightInput">Height (cm)</label>
+                                <input type="number" id="heightInput" min="100" max="250">
+                            </div>
+                            <div class="form-group">
+                                <label for="weightInput">Weight (kg)</label>
+                                <input type="number" id="weightInput" min="30" max="300">
+                            </div>
+                            <div class="form-group">
+                                <label for="bodyTypeSelect">Body Type</label>
+                                <select id="bodyTypeSelect">
+                                    <option value="">Select...</option>
+                                    <option value="athletic">Athletic</option>
+                                    <option value="petite">Petite</option>
+                                    <option value="curvy">Curvy</option>
+                                    <option value="tall">Tall</option>
+                                    <option value="average">Average</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Measurements</button>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Modal -->
+        <div id="privacyModal" class="modal" hidden role="dialog" aria-labelledby="privacyModalTitle" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="privacyModalTitle">Privacy & Data</h2>
+                    <button class="close-btn" aria-label="Close privacy settings">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <section>
+                        <h3>Your Data</h3>
+                        <p>We take your privacy seriously. All sensitive data is encrypted.</p>
+                        <div class="privacy-actions">
+                            <button id="exportDataBtn" class="btn btn-secondary">
+                                <i class="fas fa-download"></i> Export My Data
+                            </button>
+                            <button id="deleteDataBtn" class="btn btn-danger">
+                                <i class="fas fa-trash"></i> Delete My Data
+                            </button>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>Privacy Policy</h3>
+                        <ul class="privacy-points">
+                            <li>Your data is encrypted and secure</li>
+                            <li>We never share your information without consent</li>
+                            <li>Anonymous mode is available</li>
+                            <li>You can delete your data anytime</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accessibility Modal -->
+        <div id="accessibilityModal" class="modal" hidden role="dialog" aria-labelledby="accessibilityModalTitle" aria-modal="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="accessibilityModalTitle">Accessibility Options</h2>
+                    <button class="close-btn" aria-label="Close accessibility options">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <section>
+                        <h3>Display Settings</h3>
+                        <div class="form-group">
+                            <label for="fontSizeSelect">Font Size</label>
+                            <select id="fontSizeSelect">
+                                <option value="normal">Normal</option>
+                                <option value="large">Large</option>
+                                <option value="x-large">Extra Large</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="contrastToggle">
+                                <input type="checkbox" id="contrastToggle">
+                                High Contrast Mode
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="screenReaderMode">
+                                <input type="checkbox" id="screenReaderMode">
+                                Enhanced Screen Reader Support
+                            </label>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen Reader Only Content -->
+    <div class="sr-only" role="status" aria-live="polite" id="srStatus"></div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
