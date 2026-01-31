@@ -58,7 +58,7 @@ class ChatHistory(Base):
     session_id = Column(String(100))
     message_type = Column(String(20))  # 'user' or 'bot'
     message = Column(Text)
-    metadata = Column(Text)  # JSON for additional data
+    message_metadata = Column(Text)  # JSON for additional data
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class TryOnHistory(Base):

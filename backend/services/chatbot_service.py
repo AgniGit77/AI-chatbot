@@ -170,7 +170,7 @@ What would you like to explore today?""",
                     'type': record.message_type,
                     'message': record.message,
                     'timestamp': record.created_at.isoformat(),
-                    'metadata': json.loads(record.metadata) if record.metadata else {}
+                    'metadata': json.loads(record.message_metadata) if record.message_metadata else {}
                 })
             
             return list(reversed(history))
@@ -186,7 +186,7 @@ What would you like to explore today?""",
                 session_id=session_id,
                 message_type=message_type,
                 message=message,
-                metadata=metadata
+                message_metadata=metadata
             )
             db.add(chat_record)
             db.commit()
