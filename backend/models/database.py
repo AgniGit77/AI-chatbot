@@ -101,11 +101,7 @@ def init_db():
 
 def get_db():
     """Get database session"""
-    db = SessionLocal()
-    try:
-        return db
-    finally:
-        pass
+    return SessionLocal()
 
 def close_db(db):
     """Close database session"""
